@@ -57,7 +57,7 @@ export async function getDocumentos(req, res) {
 
 export async function getDocumento(req, res) {
   try {
-    const { error } = documentoQueryValidation.validate(req.query);
+    const { error } = documentoQueryValidation.validate(req.params);
     if (error)
       return handleErrorClient(res, 400, "Error de validación", error.message);
 
@@ -86,8 +86,8 @@ export async function updateDocumento(req, res) {
     const [actualizado, err] = await updateDocumentoService(id, {
       nombre,
       ID_CEE,
-      fechaSubida: fecha_subida, // Cambio aquí
-      archivoBase64: archivo_base64, // Cambio aquí
+      fechaSubida: fecha_subida,
+      archivoBase64: archivo_base64,
     });
 
     if (err)
