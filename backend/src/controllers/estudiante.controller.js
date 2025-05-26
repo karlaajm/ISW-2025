@@ -1,15 +1,15 @@
 "use strict";
 import {
+  createUserService,
   deleteUserService,
   getUserService,
   getUsersService,
   updateUserService,
-  createUserService,
-} from "../services/user.service.js";
+} from "../services/estudiante.service.js";
 import {
   userBodyValidation,
   userQueryValidation,
-} from "../validations/user.validation.js";
+} from "../validations/estudiante.validation.js";
 import {
   handleErrorClient,
   handleErrorServer,

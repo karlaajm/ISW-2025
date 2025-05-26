@@ -71,7 +71,7 @@ async function setupServer() {
 
     app.use("/api", indexRoutes);
 
-    io.on('connection', (socket) => {
+    io.on("connection", (socket) => {
       console.log("Usuario conectado");
       socket.on("message", (body) => {
         //console.log(body);
@@ -81,7 +81,7 @@ async function setupServer() {
         });
         //console.log(body);
       });
-      socket.on('disconnect',()=>{
+      socket.on("disconnect",()=>{
         console.log("Usuario desconectado");
       })
     });
