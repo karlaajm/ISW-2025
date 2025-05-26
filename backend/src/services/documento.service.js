@@ -26,7 +26,7 @@ export async function createDocumento({
 export async function getDocumentos() {
   try {
     const repo = AppDataSource.getRepository(Documento);
-    const documentos = await repo.find({ relations: ["miembroCEE"] });
+    const documentos = await repo.find();
     return [documentos, null];
   } catch (error) {
     return [null, error.message];
@@ -38,7 +38,6 @@ export async function getDocumento(id) {
     const repo = AppDataSource.getRepository(Documento);
     const documento = await repo.findOne({
       where: { id },
-      relations: ["miembroCEE"],
     });
     return [documento, null];
   } catch (error) {
