@@ -11,7 +11,7 @@ import {
 
 const router = Router();
 
-router.use(authenticateJwt);
+//router.use(authenticateJwt);
 
 router.post("/", createLibro);           // http://localhost:3000/api/libro/
 router.get("/all", getLibros);           // http://localhost:3000/api/libro/all
