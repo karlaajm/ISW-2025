@@ -29,8 +29,8 @@ export async function createDocumento(req, res) {
     const [documento, err] = await createDocumentoService({
       nombre,
       ID_CEE,
-      fecha_subida,
-      archivo_base64, // NUEVO
+      fechaSubida: fecha_subida,
+      archivoBase64: archivo_base64,
     });
 
     if (err) return handleErrorClient(res, 400, "Error creando documento", err);
@@ -86,8 +86,8 @@ export async function updateDocumento(req, res) {
     const [actualizado, err] = await updateDocumentoService(id, {
       nombre,
       ID_CEE,
-      fecha_subida,
-      archivo_base64, // NUEVO
+      fechaSubida: fecha_subida, // Cambio aquí
+      archivoBase64: archivo_base64, // Cambio aquí
     });
 
     if (err)
