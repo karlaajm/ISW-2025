@@ -2,9 +2,9 @@
 import {
   createDocumento as createDocumentoService,
   deleteDocumento as deleteDocumentoService,
-  getDocumento,
-  getDocumentos,
-  updateDocumento,
+  getDocumento as getDocumentoService,
+  getDocumentos as getDocumentosService,
+  updateDocumento as updateDocumentoService,
 } from "../services/documento.service.js";
 
 import {
@@ -43,7 +43,7 @@ export async function createDocumento(req, res) {
 
 export async function getDocumentos(req, res) {
   try {
-    const [documentos, err] = await getDocumentos();
+    const [documentos, err] = await getDocumentosService();
 
     if (err) return handleErrorClient(res, 404, err);
 
@@ -62,7 +62,7 @@ export async function getDocumento(req, res) {
       return handleErrorClient(res, 400, "Error de validación", error.message);
 
     const { id } = req.params;
-    const [documento, err] = await getDocumento(id);
+    const [documento, err] = await getDocumentoService(id);
 
     if (err) return handleErrorClient(res, 404, err);
     if (!documento)
@@ -83,7 +83,7 @@ export async function updateDocumento(req, res) {
 
     const { nombre, ID_CEE, fecha_subida, archivo_base64 } = req.body;
 
-    const [actualizado, err] = await updateDocumento(id, {
+    const [actualizado, err] = await updateDocumentoService(id, {
       nombre,
       ID_CEE,
       fecha_subida,
