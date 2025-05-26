@@ -24,12 +24,12 @@ const UserSchema = new EntitySchema({
     email: {
       type: "varchar",
       length: 255,
-      nullable: false,
+      nullable: true,
       unique: true,
     },
     password: {
       type: "varchar",
-      nullable: false,
+      nullable: true,
     },
     createdAt: {
       type: "timestamp with time zone",

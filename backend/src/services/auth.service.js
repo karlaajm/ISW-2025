@@ -1,5 +1,5 @@
 "use strict";
-import User from "../entity/user.entity.js";
+import Estudiante from "../entity/estudiante.entity.js";
 import jwt from "jsonwebtoken";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
@@ -7,7 +7,7 @@ import { ACCESS_TOKEN_SECRET } from "../config/configEnv.js";
 
 export async function loginService(user) {
   try {
-    const userRepository = AppDataSource.getRepository(User);
+    const userRepository = AppDataSource.getRepository(Estudiante);
     const { email, password } = user;
 
     const createErrorMessage = (dataInfo, message) => ({
@@ -33,7 +33,6 @@ export async function loginService(user) {
       nombreCompleto: userFound.nombreCompleto,
       email: userFound.email,
       rut: userFound.rut,
-      rol: userFound.rol,
     };
 
     const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
@@ -50,7 +49,7 @@ export async function loginService(user) {
 
 export async function registerService(user) {
   try {
-    const userRepository = AppDataSource.getRepository(User);
+    const userRepository = AppDataSource.getRepository(Estudiante);
 
     const { nombreCompleto, rut, email } = user;
 
@@ -80,7 +79,6 @@ export async function registerService(user) {
       email,
       rut,
       password: await encryptPassword(user.password),
-      rol: "usuario",
     });
 
     await userRepository.save(newUser);
