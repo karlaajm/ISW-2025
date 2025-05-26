@@ -18,17 +18,17 @@ import {
 
 export async function getUser(req, res) {
   try {
-    const { rut, id, correo } = req.query;
+    const { rut } = req.query;
     
-    const { error } = userQueryValidation.validate({ rut, id, correo });
+    const { error } = userQueryValidation.validate({ rut });
 
     if (error) return handleErrorClient(res, 400, error.message);
 
-    const [user, errorUser] = await getUserService({ rut, id, correo });
+    const [user, errorUser] = await getUserService({ rut });
 
     if (errorUser) return handleErrorClient(res, 404, errorUser);
 
-    handleSuccess(res, 200, "Usuario encontrado", user);
+    handleSuccess(res, 200, "Estudiante encontrado", user);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }
@@ -42,7 +42,7 @@ export async function getUsers(req, res) {
 
     users.length === 0
       ? handleSuccess(res, 204)
-      : handleSuccess(res, 200, "Usuarios encontrados", users);
+      : handleSuccess(res, 200, "Estudiantes encontrados", users);
   } catch (error) {
     handleErrorServer(
       res,
@@ -54,13 +54,11 @@ export async function getUsers(req, res) {
 
 export async function updateUser(req, res) {
   try {
-    const { rut, id, correo } = req.query;
+    const { rut } = req.query;
     const { body } = req;
 
     const { error: queryError } = userQueryValidation.validate({
-      rut,
-      id,
-      correo,
+      rut
     });
 
     if (queryError) {
@@ -82,11 +80,11 @@ export async function updateUser(req, res) {
         bodyError.message,
       );
 
-    const [user, userError] = await updateUserService({ rut, id, correo }, body);
+    const [user, userError] = await updateUserService({ rut }, body);
 
-    if (userError) return handleErrorClient(res, 400, "Error modificando al usuario", userError);
+    if (userError) return handleErrorClient(res, 400, "Error modificando al estudiante", userError);
 
-    handleSuccess(res, 200, "Usuario modificado correctamente", user);
+    handleSuccess(res, 200, "Estudiante modificado correctamente", user);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }
@@ -94,12 +92,10 @@ export async function updateUser(req, res) {
 
 export async function deleteUser(req, res) {
   try {
-    const { rut, id, correo } = req.query;
+    const { rut } = req.query;
 
     const { error: queryError } = userQueryValidation.validate({
-      rut,
-      id,
-      correo,
+      rut
     });
 
     if (queryError) {
@@ -112,14 +108,12 @@ export async function deleteUser(req, res) {
     }
 
     const [userDelete, errorUserDelete] = await deleteUserService({
-      rut,
-      id,
-      correo,
+      rut
     });
 
-    if (errorUserDelete) return handleErrorClient(res, 404, "Error eliminado al usuario", errorUserDelete);
+    if (errorUserDelete) return handleErrorClient(res, 404, "Error eliminado al estudiante", errorUserDelete);
 
-    handleSuccess(res, 200, "Usuario eliminado correctamente", userDelete);
+    handleSuccess(res, 200, "Estudiante eliminado correctamente", userDelete);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }
@@ -136,9 +130,9 @@ export async function createUser(req, res) {
 
     const [newUser, errorNewUser] = await createUserService(body);
 
-    if (errorNewUser) return handleErrorClient(res, 400, "Error registrando al usuario", errorNewUser);
+    if (errorNewUser) return handleErrorClient(res, 400, "Error registrando al estudiante", errorNewUser);
 
-    handleSuccess(res, 201, "Usuario registrado con éxito", newUser);
+    handleSuccess(res, 201, "Estudiante registrado con éxito", newUser);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }

@@ -1,16 +1,16 @@
 "use strict";
-import Estudiante from "../entity/user.entity.js";
+import Estudiante from "../entity/estudiante.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
 
 export async function getUserService(query) {
   try {
-    const { rut, id, email } = query;
+    const { rut } = query;
 
     const userRepository = AppDataSource.getRepository(Estudiante);
 
     const userFound = await userRepository.findOne({
-      where: [{ id: id }, { rut: rut }, { email: email }],
+      where: { rut: rut }
     });
 
     if (!userFound) return [null, "Estudiante no encontrado"];
@@ -43,12 +43,12 @@ export async function getUsersService() {
 
 export async function updateUserService(query, body) {
   try {
-    const { id, rut, email } = query;
+    const { rut } = query;
 
     const userRepository = AppDataSource.getRepository(Estudiante);
 
     const userFound = await userRepository.findOne({
-      where: [{ id: id }, { rut: rut }, { email: email }],
+      where: { rut: rut }
     });
 
     if (!userFound) return [null, "Estudiante no encontrado"];
@@ -102,12 +102,12 @@ export async function updateUserService(query, body) {
 
 export async function deleteUserService(query) {
   try {
-    const { id, rut, email } = query;
+    const { rut } = query;
 
     const userRepository = AppDataSource.getRepository(Estudiante);
 
     const userFound = await userRepository.findOne({
-      where: [{ id: id }, { rut: rut }, { email: email }],
+      where: { rut: rut }
     });
 
     if (!userFound) return [null, "Estudiante no encontrado"];

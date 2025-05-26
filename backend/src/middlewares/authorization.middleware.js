@@ -1,4 +1,4 @@
-import Estudiante from "../entities/Estudiante.js";
+import Estudiante from "../entity/estudiante.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import {
 handleErrorClient,
