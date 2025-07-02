@@ -1,6 +1,7 @@
 "use strict";
 import { Router } from "express";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
+import { onlyCEE } from "../middlewares/authorization.middleware.js";
 import {
     createLibro,
     deleteLibro,
@@ -12,6 +13,7 @@ import {
 const router = Router();
 
 router.use(authenticateJwt);
+router.use(onlyCEE);
 
 router.post("/", createLibro);           // http://localhost:3000/api/libro/
 router.get("/all", getLibros);           // http://localhost:3000/api/libro/all

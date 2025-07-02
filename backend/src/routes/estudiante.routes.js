@@ -11,12 +11,12 @@ import {
 
 const router = Router();
 
-router
-  .use(authenticateJwt)
+router.use(authenticateJwt);
 
-  router.post("/",createUser);   // http://localhost:3000/api/user/
-  router.get("/all",getUsers);   // http://localhost:3000/api/user/all
-  router.get("/",getUser);       // http://localhost:3000/api/user?rut=...
-  router.patch("/",updateUser);  // http://localhost:3000/api/user?rut=...
-  router.delete("/",deleteUser); // http://localhost:3000/api/user?rut=...
+router.post("/",createUser);   // http://localhost:3000/api/user/
+router.get("/all",getUsers);   // http://localhost:3000/api/user/all
+router.get("/",getUser);       // http://localhost:3000/api/user?rut=...
+router.patch("/",updateUser);  // http://localhost:3000/api/user?rut=...
+router.delete("/",deleteUser); // http://localhost:3000/api/user?rut=...
+
 export default router;

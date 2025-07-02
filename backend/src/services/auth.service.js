@@ -33,6 +33,7 @@ export async function loginService(user) {
       nombreCompleto: userFound.nombreCompleto,
       email: userFound.email,
       rut: userFound.rut,
+      esCEE: userFound.esCEE, 
     };
 
     const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
