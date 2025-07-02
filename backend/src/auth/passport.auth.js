@@ -15,18 +15,20 @@ passport.use(
     try {
       const userRepository = AppDataSource.getRepository(Estudiante);
       const user = await userRepository.findOne({
-        where: {
-          email: jwt_payload.email,
-        },
+        where: { rut: jwt_payload.rut },
       });
-
       if (user) {
-        return done(null, user);
+        return done(null, {
+          id: user.id,
+          rut: user.rut,
+          email: user.email,
+          esCEE: user.esCEE,
+        });
       } else {
         return done(null, false);
       }
-    } catch (error) {
-      return done(error, false);
+    } catch (err) {
+      return done(err, false);
     }
   }),
 );

@@ -17,6 +17,7 @@ async function createUsers() {
           rut: "21.308.770-3",
           email: "administrador2024@alumnos.ubiobio.cl",
           password: await encryptPassword("admin1234"),
+          esCEE: true,
         }),
       ),
       userRepository.save(
@@ -25,6 +26,7 @@ async function createUsers() {
           rut: "21.151.897-9",
           email: "usuario1.2024@alumnos.ubiobio.cl",
           password: await encryptPassword("user1234"),
+          esCEE: true,
         })
       ),
         userRepository.save(
@@ -33,6 +35,7 @@ async function createUsers() {
             rut: "20.630.735-8",
             email: "usuario2.2024@alumnos.ubiobio.cl",
             password: await encryptPassword("user1234"),
+            esCEE: false,
           }),
       ),
       userRepository.save(
@@ -41,6 +44,7 @@ async function createUsers() {
           rut: "20.738.450-K",
           email: "usuario3.2024@alumnos.ubiobio.cl",
           password: await encryptPassword("user1234"),
+          esCEE: false,
         }),
       ),
       userRepository.save(
@@ -49,6 +53,7 @@ async function createUsers() {
           rut: "20.976.635-3",
           email: "usuario4.2024@alumnos.ubiobio.cl",
           password: await encryptPassword("user1234"),
+          esCEE: false,
         }),
       ),
       userRepository.save(
@@ -57,6 +62,7 @@ async function createUsers() {
           rut: "21.172.447-1",
           email: "usuario5.2024@alumnos.ubiobio.cl",
           password: await encryptPassword("user1234"),
+          esCEE: false,
         }),
       ),
       userRepository.save(
@@ -65,6 +71,7 @@ async function createUsers() {
           rut: "20.738.415-1",
           email: "usuario6.2024@alumnos.ubiobio.cl",
           password: await encryptPassword("user1234"),
+          esCEE: false,
         }),
       ),
     ]);

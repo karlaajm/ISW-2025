@@ -53,14 +53,24 @@ export async function updateUserService(query, body) {
 
     if (!userFound) return [null, "Estudiante no encontrado"];
 
-    const existingUser = await userRepository.findOne({
-      where: [{ rut: body.rut }, { email: body.email }],
-    });
-
-    if (existingUser && existingUser.id !== userFound.id) {
-      return [null, "Ya existe un estudiante con el mismo rut o email"];
+    if (body.email && body.email !== userFound.email) {
+      const existingEmailUser = await userRepository.findOne({
+        where: { email: body.email },
+      });
+      if (existingEmailUser) {
+        return [null, "Ya existe un estudiante con el mismo email"];
+      }
     }
 
+    if (body.rut && body.rut !== userFound.rut) {
+      const existingRutUser = await userRepository.findOne({
+        where: { rut: body.rut },
+      });
+      if (existingRutUser) {
+        return [null, "Ya existe un estudiante con el mismo rut"];
+      }
+    }
+    
     if (body.password) {
       const matchPassword = await comparePassword(
         body.password,
@@ -75,6 +85,7 @@ export async function updateUserService(query, body) {
       rut: body.rut,
       email: body.email,
       updatedAt: new Date(),
+      esCEE: body.esCEE ?? userFound.esCEE,
     };
 
     if (body.newPassword && body.newPassword.trim() !== "") {
@@ -127,7 +138,7 @@ export async function createUserService(user) {
   try {
     const userRepository = AppDataSource.getRepository(Estudiante);
 
-    const { nombreCompleto, rut, email } = user;
+    const { nombreCompleto, rut, email, password, esCEE } = user;
 
     const createErrorMessage = (dataInfo, message) => ({
       dataInfo,
@@ -154,14 +165,15 @@ export async function createUserService(user) {
       nombreCompleto,
       email,
       rut,
-      telefono
+      password: await encryptPassword(password),
+      esCEE: esCEE ?? false,
     });
 
     await userRepository.save(newUser);
 
-    const { password, ...dataUser } = newUser;
+    const { password: _, ...userData } = newUser;
 
-    return [dataUser, null];
+    return [userData, null];
   } catch (error) {
     console.error("Error al registrar un estudiante", error);
     return [null, "Error interno del servidor"];
