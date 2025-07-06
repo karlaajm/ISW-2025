@@ -1,12 +1,48 @@
 .navbar {
+	background: #1a237e;
+	color: #fff;
 	position: fixed;
 	width: 100%;
 	top: 0;
 	left: 0;
-	display: block;
-	background-color: #003366; /*Color de la navbar*/
+	padding: 1rem 2rem;
+  	display: flex;
+	background-color: #003366;
 	height: 9vh;
 	z-index: 1000;
+	justify-content: space-between;
+  	align-items: center;
+	.navbar-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar-link {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.navbar-link:hover {
+  color: #90caf9;
+}
+
+.logout {
+  background: #fff;
+  color: #1a237e;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+  margin-left: 2rem;
+}
+
+.logout:hover {
+  background: #e3e3e3;
+}
 	ul {
 		display: flex;
 		justify-content:end;

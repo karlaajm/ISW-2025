@@ -13,9 +13,9 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <div>
-        <Link to="/inicio">Inicio</Link>
-        <Link to="/libros">Libros Contables</Link>
+      <div className="navbar-links">
+        <Link to="/inicio" className="navbar-link">Inicio</Link>
+        <Link to="/libros" className="navbar-link">Libros Contables</Link>
       </div>
       <button className="logout" onClick={handleLogout}>
         Cerrar sesión
