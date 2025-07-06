@@ -1,110 +1,25 @@
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { logout } from '@services/auth.service.js';
-import '@styles/navbar.css';
-import { useState } from "react";
+"use strict";
+import { Link, useNavigate } from "react-router-dom";
+import "@styles/navbar.css";
 
-const Navbar = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const user = JSON.parse(sessionStorage.getItem('usuario')) || '';
-    const userRole = user?.rol;
-    const [menuOpen, setMenuOpen] = useState(false);
+export default function Navbar() {
+  const navigate = useNavigate();
 
-    const logoutSubmit = () => {
-        try {
-            logout();
-            navigate('/auth'); 
-        } catch (error) {
-            console.error('Error al cerrar sesión:', error);
-        }
-    };
+  const handleLogout = () => {
+    sessionStorage.clear();
+    document.cookie = "jwt-auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    navigate("/");
+  };
 
-    const toggleMenu = () => {
-        if (!menuOpen) {
-            removeActiveClass();
-        } else {
-            addActiveClass();
-        }
-        setMenuOpen(!menuOpen);
-    };
-
-    const removeActiveClass = () => {
-        const activeLinks = document.querySelectorAll('.nav-menu ul li a.active');
-        activeLinks.forEach(link => link.classList.remove('active'));
-    };
-
-    const addActiveClass = () => {
-        const links = document.querySelectorAll('.nav-menu ul li a');
-        links.forEach(link => {
-            if (link.getAttribute('href') === location.pathname) {
-                link.classList.add('active');
-            }
-        });
-    };
-
-    return (
-        <nav className="navbar">
-            <div className={`nav-menu ${menuOpen ? 'activado' : ''}`}>
-                <ul>
-                    <li>
-                        <NavLink 
-                            to="/home" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
-                                addActiveClass();
-                            }} 
-                            activeClassName="active"
-                        >
-                            Inicio
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink 
-                            to="/chat" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
-                                addActiveClass();
-                            }} 
-                            activeClassName="active"
-                        >
-                            Chat
-                        </NavLink>
-                    </li>
-                    {userRole === 'administrador' && (
-                    <li>
-                        <NavLink 
-                            to="/users" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
-                                addActiveClass();
-                            }} 
-                            activeClassName="active"
-                        >
-                            Usuarios
-                        </NavLink>
-                    </li>
-                    )}
-                    <li>
-                        <NavLink 
-                            to="/auth" 
-                            onClick={() => { 
-                                logoutSubmit(); 
-                                setMenuOpen(false); 
-                            }} 
-                            activeClassName="active"
-                        >
-                            Cerrar sesión
-                        </NavLink>
-                    </li>
-                </ul>
-            </div>
-            <div className="hamburger" onClick={toggleMenu}>
-                <span className="bar"></span>
-                <span className="bar"></span>
-                <span className="bar"></span>
-            </div>
-        </nav>
-    );
-};
-
-export default Navbar;
+  return (
+    <nav className="navbar">
+      <div>
+        <Link to="/inicio">Inicio</Link>
+        <Link to="/libros">Libros Contables</Link>
+      </div>
+      <button className="logout" onClick={handleLogout}>
+        Cerrar sesión
+      </button>
+    </nav>
+  );
+}

@@ -21,12 +21,12 @@ export default defineConfig({
       '@helpers': path.resolve(__dirname, './src/helpers')
     }
   },
-  server: {
+  server: { /*
     proxy: {
       '/socket.io': {
         target: 'ws://localhost:3000',
         ws: true,
       },
-    }
+    }*/
   }
 });

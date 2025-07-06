@@ -15,4 +15,11 @@ router
   .use("/documento", documentoRoutes)
   .use("/movimiento", movimientosLibroRoutes);
 
+router.use((req, res, next) => {
+  res.status(404).json({
+    status: "error",
+    message: "Ruta no encontrada",
+  });
+});
+
 export default router;

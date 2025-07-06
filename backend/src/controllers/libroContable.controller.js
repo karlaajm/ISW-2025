@@ -54,6 +54,7 @@ export async function getLibro(req, res) {
       return handleErrorClient(res, 400, "Error de validación", error.message);
 
     const { nombre } = req.params;
+    
     const [libro, err] = await getLibroContable(nombre);
 
     if (err) return handleErrorClient(res, 404, err);

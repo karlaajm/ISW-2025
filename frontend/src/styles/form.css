@@ -10,14 +10,31 @@
         margin-bottom: 2vh;
     }
 
-    .form input, .form select {
+    .form input {
+		width: 100%;
+  		margin: 0.5rem 0;
+ 		padding: 0.7rem;
+  		border: 1px solid #bdbdbd;
+  		border-radius: 5px;
+  		font-size: 1rem;
+	} 
+	
+	.form select {
         padding: 10px;
         font-size: 14px;
     }
 
     .form button {
-        padding: 10px;
-        font-size: 16px;
+        width: 100%;
+  		padding: 0.7rem;
+  		background: #1a237e;
+  		color: #fff;
+  		border: none;
+  		border-radius: 5px;
+  		margin-top: 1rem;
+  		font-size: 1rem;
+  		cursor: pointer;
+  		transition: background 0.2s;
     }
 
     .form .footerContent {
@@ -25,7 +42,13 @@
     }
     
     .container {
-        padding: 0 10px;
+        max-width: 350px;
+  		margin: 6rem auto;
+  		padding: 2rem 2.5rem;
+  		background: #fff;
+  		border-radius: 10px;
+  		box-shadow: 0 2px 12px rgba(30,40,100,0.08);
+  		text-align: center;
     }
     
     .toggle-password-icon {
@@ -152,6 +175,7 @@
 		margin-top: 10px;
 	}
 	button:hover{
+		background: #3949ab;
 		border: 3px solid #003366;
 		background-color: #eef7ff;
 		color: #003366;
@@ -168,7 +192,12 @@
 		margin-top: 10px;
 	}
 }
-.form .error-message {
+.form-error {
+	color: #d32f2f;
+  	margin-top: 1rem;
+}
+
+.error-message {
     visibility: hidden;
     height: 20px;
     color: red;
