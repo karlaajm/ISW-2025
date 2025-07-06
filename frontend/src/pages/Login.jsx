@@ -14,7 +14,8 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     const result = await login({ email, password });
-    if (result.status === "success") {
+    console.log(result);
+    if (result.status === "Success") {
       navigate("/inicio");
     } else {
       setError(result.message || "Error al iniciar sesión");

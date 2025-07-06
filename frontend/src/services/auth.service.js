@@ -14,12 +14,12 @@ export async function login(dataUser) {
             const { nombreCompleto, email, rut, rol } = jwtDecode(data.data.token);
             const userData = { nombreCompleto, email, rut, rol };
             sessionStorage.setItem('usuario', JSON.stringify(userData));
-            axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`;
             cookies.set('jwt-auth', data.data.token, {path:'/'});
-            return response.data
+            return data;
         }
     } catch (error) {
-        return error.response.data;
+        return error.response?.data || { status: "error", message: "Error al iniciar sesión" };
     }
 }
 
