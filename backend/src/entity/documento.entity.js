@@ -16,8 +16,8 @@ const DocumentoSchema = new EntitySchema({
     },
     fechaSubida: {
       name: "fecha_subida",
-      type: "timestamp with time zone",
-      default: () => "CURRENT_TIMESTAMP",
+      type: "date",
+      default: () => "CURRENT_DATE",
       nullable: false,
     },
     archivoBase64: {
