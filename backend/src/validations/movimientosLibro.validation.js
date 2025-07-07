@@ -23,7 +23,7 @@ export const movimientoBodyValidation = Joi.object({
       "any.required": "La descripción es obligatoria.", 
     }),
   tipo: Joi.string()
-    .valid("Gasto", "Ganancia")
+    .valid("gasto", "ganancia")
     .required()
     .messages({
       "any.only": "El tipo debe ser 'gasto' o 'ganancia'.",
@@ -59,7 +59,7 @@ export const movimientoUpdateValidation = Joi.object({
       "string.max": "La descripción debe tener como máximo 50 caracteres.",
     }),
   tipo: Joi.string()
-    .valid("Gasto", "Ganancia")
+    .valid("gasto", "ganancia")
     .messages({
       "any.only": "El tipo debe ser 'gasto' o 'ganancia'.",
     }),

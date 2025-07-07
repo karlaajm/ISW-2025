@@ -1,6 +1,40 @@
 import axios from './root.service.js';
 
 export async function getLibros() {
-  const { data } = await axios.get('/libro/all');
-  return data;
+  try {
+    const response = await axios.get('/libro/all');
+    return response.data.data;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function crearLibro(data) {
+  const response = await axios.post('/libro', data);
+  return response.data.data;
+}
+
+export async function getLibroPorNombre(nombre) {
+  const response = await axios.get(`/libro/${encodeURIComponent(nombre)}`);
+  return response.data.data;
+}
+
+export async function actualizarLibro(id, data) {
+  const response = await axios.patch(`/libro/${id}`, data);
+  return response.data.data;
+}
+
+export async function eliminarLibro(nombre) {
+  const response = await axios.delete(`/libro/${encodeURIComponent(nombre)}`);
+  return response.data.data;
+}
+
+export async function crearMovimiento(data) {
+  const response = await axios.post('/movimiento', data);
+  return response.data.data;
+}
+
+export async function getMovimientosPorLibro(libroId) {
+  const response = await axios.get(`/movimiento/${libroId}`);
+  return response.data.data;
 }
