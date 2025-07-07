@@ -18,17 +18,25 @@ import {
 
 export async function createLibro(req, res) {
   try {
+    console.log("Body recibido:", req.body);
     const { error } = libroContableBodyValidation.validate(req.body);
     if (error)
       return handleErrorClient(res, 400, "Error de validación", error.message);
 
     const { nombre } = req.body;
+    const [existente, existeErr] = await getLibroContable(nombre);
+    if (existente) {
+      return res.status(400).json({ message: "Ya existe un libro con ese nombre" });
+    }
     const [libro, err] = await createLibroContable(nombre);
 
-    if (err) return handleErrorClient(res, 400, "Error creando libro contable", err);
-
+    if (err) {
+      console.log("Error creando libro:", err);
+      return handleErrorClient(res, 400, "Error creando libro contable", err);
+    }
     handleSuccess(res, 201, "Libro contable creado con éxito", libro);
   } catch (error) {
+    console.log("Error inesperado:", error);
     handleErrorServer(res, 500, error.message);
   }
 }
@@ -53,7 +61,7 @@ export async function getLibro(req, res) {
     if (error)
       return handleErrorClient(res, 400, "Error de validación", error.message);
 
-    const { nombre } = req.params;
+    const nombre = decodeURIComponent(req.params.nombre);
     
     const [libro, err] = await getLibroContable(nombre);
 
