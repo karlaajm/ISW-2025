@@ -188,7 +188,7 @@ export default function LibrosPage() {
               </tr>
             </thead>
             <tbody>
-              {libros.map((libro, idx) => (
+              {libros?.map((libro, idx) => (
                 <tr
                   key={libro.id}
                   style={{
