@@ -147,7 +147,7 @@ export default function LibrosPage() {
         </h2>
         {loading ? (
           <p style={{ color: "#1a237e", fontWeight: 500 }}>Cargando libros...</p>
-        ) : libros?.length === 0 ? (
+        ) : !Array.isArray(libros) || libros.length === 0 ? (
           <p style={{ color: "#d32f2f", fontWeight: 500 }}>No hay libros registrados.</p>
         ) : (
           <table style={{

@@ -211,6 +211,8 @@ export default function LibroDetalle() {
                           setMovTipo("gasto");
                           const nuevosMovimientos = await getMovimientosPorLibro(libro.id);
                           setMovimientos(nuevosMovimientos);
+                          const libroActualizado = await getLibroPorNombre(libro.nombre);
+                          setLibro(libroActualizado);
                         } catch (err) {
                           setMovError(
                             err?.response?.data?.message ||
