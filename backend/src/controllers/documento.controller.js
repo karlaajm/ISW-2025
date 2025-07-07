@@ -24,11 +24,11 @@ export async function createDocumento(req, res) {
     if (error)
       return handleErrorClient(res, 400, "Error de validación", error.message);
 
-    const { nombre, ID_CEE, fecha_subida, archivo_base64 } = req.body;
+    const { nombre, ID_Estudiante, fecha_subida, archivo_base64 } = req.body;
 
     const [documento, err] = await createDocumentoService({
       nombre,
-      ID_CEE,
+      ID_Estudiante,
       fechaSubida: fecha_subida,
       archivoBase64: archivo_base64,
     });
@@ -81,11 +81,11 @@ export async function updateDocumento(req, res) {
     if (error)
       return handleErrorClient(res, 400, "Error de validación", error.message);
 
-    const { nombre, ID_CEE, fecha_subida, archivo_base64 } = req.body;
+    const { nombre, ID_Estudiante, fecha_subida, archivo_base64 } = req.body;
 
     const [actualizado, err] = await updateDocumentoService(id, {
       nombre,
-      ID_CEE,
+      ID_Estudiante,
       fechaSubida: fecha_subida,
       archivoBase64: archivo_base64,
     });

@@ -1,4 +1,3 @@
-"use strict";
 import { EntitySchema } from "typeorm";
 
 const DocumentoSchema = new EntitySchema({
@@ -27,7 +26,17 @@ const DocumentoSchema = new EntitySchema({
       nullable: true,
     },
   },
-
+  relations: {
+    estudiante: {
+      type: "many-to-one",
+      target: "Estudiante",
+      joinColumn: {
+        name: "ID_Estudiante",
+      },
+      nullable: false,
+      eager: true,
+    },
+  },
   indices: [
     {
       name: "IDX_DOCUMENTO_ID",
