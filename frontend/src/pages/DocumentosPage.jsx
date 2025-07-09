@@ -111,7 +111,7 @@ export default function DocumentosPage() {
 				documento={dataDocumento[0]}
 				onSave={(formData) => {
 					if (dataDocumento.length > 0) {
-						/*linea 114*/ handleUpdate(formData);
+						handleUpdate(formData);
 					} else {
 						handleCreate(formData);
 					}
