@@ -35,6 +35,11 @@ const Movimiento = new EntitySchema({
         onUpdate: "CURRENT_TIMESTAMP",
         nullable: false,
         },
+        eliminado: {
+        type: "boolean",
+        default: false,
+        nullable: false,
+        },
     },
     relations: {
         libroContable: {

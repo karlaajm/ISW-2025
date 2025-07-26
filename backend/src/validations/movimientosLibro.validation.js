@@ -69,3 +69,29 @@ export const movimientoUpdateValidation = Joi.object({
     "object.unknown": "No se permiten propiedades adicionales.",
     "object.missing": "Debes proporcionar al menos un campo para actualizar.",
   });
+
+  export const movimientoIdValidation = Joi.object({
+  id: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+    .messages({
+      "number.base": "El ID debe ser un número.",
+      "number.integer": "El ID debe ser un número entero.",
+      "number.min": "El ID debe ser mayor a 0.",
+      "any.required": "El ID es obligatorio.",
+    }),
+});
+
+export const libroIdValidation = Joi.object({
+  libroId: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+    .messages({
+      "number.base": "El libroId debe ser un número.",
+      "number.integer": "El libroId debe ser un número entero.",
+      "number.min": "El libroId debe ser mayor a 0.",
+      "any.required": "El libroId es obligatorio.",
+    }),
+});
