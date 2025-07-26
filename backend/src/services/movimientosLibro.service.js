@@ -37,7 +37,7 @@ async function recalcularTotalesLibro(libroId) {
   const libroRepository = AppDataSource.getRepository(LibroContable);
 
   const movimientos = await movimientoRepository.find({
-    where: { libroContable: { id: libroId } },
+    where: { libroContable: { id: libroId }, eliminado: false },
   });
 
   const totalGanancias = movimientos
@@ -67,6 +67,10 @@ export async function updateMovimientoService(id, data) {
     movimiento.descripcion = data.descripcion ?? movimiento.descripcion;
     movimiento.tipo = data.tipo ?? movimiento.tipo;
 
+    if (typeof data.eliminado === "boolean") {
+      movimiento.eliminado = data.eliminado;
+    }
+
     await movimientoRepository.save(movimiento);
 
     // Recalcula totales del libro
@@ -85,11 +89,13 @@ export async function deleteMovimientoService(id) {
     const movimiento = await movimientoRepository.findOne({ where: { id }, relations: ["libroContable"] });
     if (!movimiento) return [null, "Movimiento no encontrado"];
 
-    const libroId = movimiento.libroContable.id;
-    await movimientoRepository.remove(movimiento);
+    if (movimiento.eliminado) return [null, "El movimiento ya está eliminado"];
+
+    movimiento.eliminado = true;
+    await movimientoRepository.save(movimiento);
 
     // Recalcula totales del libro
-    await recalcularTotalesLibro(libroId);
+    await recalcularTotalesLibro(movimiento.libroContable.id);
 
     return [true, null];
   } catch (error) {
@@ -106,12 +112,50 @@ export async function getMovimientosLibroService(libroId) {
 
     const movimientoRepository = AppDataSource.getRepository(Movimiento);
     const movimientos = await movimientoRepository.find({
-      where: { libroContable: { id: libroId } },
+      where: { libroContable: { id: libroId }, eliminado: false },
       order: { fechaCreacion: "DESC" }
     });
     return [movimientos, null];
   } catch (error) {
     console.error("Error al listar movimientos:", error);
+    return [null, "Error interno del servidor"];
+  }
+}
+
+export async function getHistorialMovimientosLibroService(libroId) {
+  try {
+    const libroRepository = AppDataSource.getRepository(LibroContable);
+    const libro = await libroRepository.findOne({ where: { id: libroId } });
+    if (!libro) return [null, "Libro contable no encontrado"];
+
+    const movimientoRepository = AppDataSource.getRepository(Movimiento);
+    // No filtramos por eliminado
+    const movimientos = await movimientoRepository.find({
+      where: { libroContable: { id: libroId } },
+      order: { fechaCreacion: "DESC" }
+    });
+    return [movimientos, null];
+  } catch (error) {
+    console.error("Error al listar historial de movimientos:", error);
+    return [null, "Error interno del servidor"];
+  }
+}
+
+export async function restaurarMovimientoService(id) {
+  try {
+    const movimientoRepository = AppDataSource.getRepository(Movimiento);
+    const movimiento = await movimientoRepository.findOne({ where: { id }, relations: ["libroContable"] });
+    if (!movimiento) return [null, "Movimiento no encontrado"];
+
+    movimiento.eliminado = false;
+    await movimientoRepository.save(movimiento);
+
+    // Recalcula totales del libro
+    await recalcularTotalesLibro(movimiento.libroContable.id);
+
+    return [movimiento, null];
+  } catch (error) {
+    console.error("Error al restaurar movimiento:", error);
     return [null, "Error interno del servidor"];
   }
 }
