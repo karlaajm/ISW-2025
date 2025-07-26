@@ -16,6 +16,7 @@ export default function Navbar() {
       <div className="navbar-links">
         <Link to="/inicio" className="navbar-link">Inicio</Link>
         <Link to="/libros" className="navbar-link">Libros Contables</Link>
+		<Link to="/documentos" className="navbar-link">Documentos de Actas</Link>
       </div>
       <button className="logout" onClick={handleLogout}>
         Cerrar sesión

@@ -1,6 +1,7 @@
 "use strict";
 import { Router } from "express";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
+import { onlyCEE } from "../middlewares/authorization.middleware.js";
 import {
   createDocumento,
   deleteDocumento,
@@ -11,7 +12,8 @@ import {
 
 const router = Router();
 
-// router.use(authenticateJwt);
+router.use(authenticateJwt);
+router.use(onlyCEE);
 
 router.post("/", createDocumento); // http://localhost:3000/api/documento/
 router.get("/all", getDocumentos); // http://localhost:3000/api/documento/all
