@@ -40,62 +40,91 @@ export default function DocumentosPage() {
 	}, [setDataDocumento]);
 
 	const columns = [
-		{ title: "Nombre", field: "nombre", width: 350 },
-		{ title: "Fecha de subida", field: "fechaSubida", width: 200 },
-		{ title: "ID", field: "id", width: 100 }
+		{ title: "Nombre", field: "nombre", width: 540 },
+		{ title: "Fecha de subida", field: "fechaSubida", width: 200 }
 	];
 
 	return (
-		<div className='main-container'>
+		<div className='main-container' style={{ marginTop: '80px', padding: '20px', background: '#e3f0ff', minHeight: '100vh' }}>
 			<Navbar />
-			<div className='table-container'>
-				<div className='top-table' style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-    <h1 className='title-table' style={{ color: "#1a237e" }}>Documentos</h1>
-    <div className='filter-actions' style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
-        <Search
-            value={filterNombre}
-            onChange={handleFilterChange}
-            placeholder={'Filtrar por nombre'}
-        />
-        <button
-            onClick={() => {
-                setDataDocumento([]);
-                setIsPopupOpen(true);
-            }}
-            style={{
-                background: "#1a237e",
-                color: "#fff",
-                border: "none",
-                borderRadius: "6px",
-                padding: "0.5rem 1.2rem",
-                fontWeight: 600,
-                fontSize: "1rem",
-                cursor: "pointer",
-                boxShadow: "0 2px 8px rgba(26,35,126,0.3)",
-                transition: "background-color 0.3s ease"
-            }}
-            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#162a66"}
-            onMouseLeave={e => e.currentTarget.style.backgroundColor = "#1a237e"}
-        >
-            + Nuevo Documento
-        </button>
-
-        <button onClick={handleClickUpdate} disabled={dataDocumento.length === 0} style={{ background: "transparent", border: "none", cursor: dataDocumento.length === 0 ? "not-allowed" : "pointer" }}>
-            {dataDocumento.length === 0 ? (
-                <img src={UpdateIconDisable} alt="edit-disabled" />
-            ) : (
-                <img src={UpdateIcon} alt="edit" />
-            )}
-        </button>
-        <button onClick={() => handleDelete(dataDocumento)} disabled={dataDocumento.length === 0} style={{ background: "transparent", border: "none", cursor: dataDocumento.length === 0 ? "not-allowed" : "pointer" }}>
-            {dataDocumento.length === 0 ? (
-                <img src={DeleteIconDisable} alt="delete-disabled" />
-            ) : (
-                <img src={DeleteIcon} alt="delete" />
-            )}
-        </button>
-    </div>
-</div>
+			<div className='table-container' style={{
+				maxWidth: 950,
+				margin: "5rem auto 4rem auto",
+				background: "#fff",
+				borderRadius: "18px",
+				boxShadow: "0 4px 32px rgba(30,40,100,0.18)",
+				padding: "3.5rem 2.5rem 2.5rem 3.5rem",
+				borderLeft: "8px solid #1a237e",
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "flex-start"
+			}}>
+				<div className='top-table' style={{ marginBottom: "2.5rem", width: "100%", paddingLeft: "0px" }}>
+					<h1 className='title-table' style={{ color: "#1a237e", fontSize: "2.6rem", fontWeight: 700, marginBottom: "2.2rem", letterSpacing: "1px", textAlign: "left", marginLeft: "0px" }}>Documentos</h1>
+					<div className='filter-actions' style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginLeft: "0px" }}>
+						<Search
+							value={filterNombre}
+							onChange={handleFilterChange}
+							placeholder={'Filtrar por nombre'}
+						/>
+						<button
+							onClick={() => {
+								setDataDocumento([]);
+								setIsPopupOpen(true);
+							}}
+							style={{
+								background: "#1a237e",
+								color: "#fff",
+								border: "none",
+								borderRadius: "6px",
+								padding: "0.5rem 1.2rem",
+								fontWeight: 600,
+								fontSize: "1rem",
+								cursor: "pointer",
+								boxShadow: "0 2px 8px rgba(26,35,126,0.3)",
+								transition: "background-color 0.3s ease"
+							}}
+							onMouseEnter={e => e.currentTarget.style.backgroundColor = "#162a66"}
+							onMouseLeave={e => e.currentTarget.style.backgroundColor = "#1a237e"}
+						>
+							+ Nuevo Documento
+						</button>
+						<button
+							onClick={handleClickUpdate}
+							disabled={dataDocumento.length === 0}
+							style={{ background: "transparent", border: "none", cursor: dataDocumento.length === 0 ? "not-allowed" : "pointer", padding: "0.2rem" }}
+							onMouseEnter={e => {
+								if (dataDocumento.length > 0) e.currentTarget.style.background = "#e3f0ff";
+							}}
+							onMouseLeave={e => {
+								e.currentTarget.style.background = "transparent";
+							}}
+						>
+							{dataDocumento.length === 0 ? (
+								<img src={UpdateIconDisable} alt="edit-disabled" />
+							) : (
+								<img src={UpdateIcon} alt="edit" />
+							)}
+						</button>
+						<button
+							onClick={() => handleDelete(dataDocumento)}
+							disabled={dataDocumento.length === 0}
+							style={{ background: "transparent", border: "none", cursor: dataDocumento.length === 0 ? "not-allowed" : "pointer", padding: "0.2rem" }}
+							onMouseEnter={e => {
+								if (dataDocumento.length > 0) e.currentTarget.style.background = "#e3f0ff";
+							}}
+							onMouseLeave={e => {
+								e.currentTarget.style.background = "transparent";
+							}}
+						>
+							{dataDocumento.length === 0 ? (
+								<img src={DeleteIconDisable} alt="delete-disabled" />
+							) : (
+								<img src={DeleteIcon} alt="delete" />
+							)}
+						</button>
+					</div>
+				</div>
 				<Table
 					data={documentos}
 					columns={columns}
@@ -104,21 +133,20 @@ export default function DocumentosPage() {
 					initialSortName={'nombre'}
 					onSelectionChange={handleSelectionChange}
 				/>
+				<PopupWrapper show={isPopupOpen} setShow={setIsPopupOpen}>
+					<FormDocumento
+						documento={dataDocumento[0]}
+						onSave={(formData) => {
+							if (dataDocumento.length > 0) {
+								handleUpdate(formData);
+							} else {
+								handleCreate(formData);
+							}
+						}}
+						onCancel={() => setIsPopupOpen(false)}
+					/>
+				</PopupWrapper>
 			</div>
-
-			<PopupWrapper show={isPopupOpen} setShow={setIsPopupOpen}>
-			<FormDocumento
-				documento={dataDocumento[0]}
-				onSave={(formData) => {
-					if (dataDocumento.length > 0) {
-						handleUpdate(formData);
-					} else {
-						handleCreate(formData);
-					}
-				}}
-				onCancel={() => setIsPopupOpen(false)}
-			/>
-			</PopupWrapper>
 		</div>
 	);
 }
