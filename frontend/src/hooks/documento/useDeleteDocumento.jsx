@@ -22,8 +22,13 @@ const useDeleteDocumento = (fetchDocumentos, setDataDocumento, setDocumentos) =>
 					showErrorAlert('Cancelado', 'La operación ha sido cancelada.');
 				}
 			} catch (error) {
+				const msg = error?.response?.data?.message || error?.message || '';
+				if (msg.includes('Centro de Estudiantes') || msg.includes('CEE')) {
+					showErrorAlert('Error', 'Acceso solo para el Centro de Estudiantes');
+				} else {
+					showErrorAlert('Cancelado', 'Ocurrió un error al eliminar el documento.');
+				}
 				console.error('Error al eliminar el documento:', error);
-				showErrorAlert('Cancelado', 'Ocurrió un error al eliminar el documento.');
 			}
 		}
 	};

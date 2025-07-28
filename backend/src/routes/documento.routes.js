@@ -12,12 +12,13 @@ import {
 
 const router = Router();
 
-router.use(authenticateJwt);
-router.use(onlyCEE);
 
-router.post("/", createDocumento); // http://localhost:3000/api/documento/
+router.use(authenticateJwt);
+
 router.get("/all", getDocumentos); // http://localhost:3000/api/documento/all
 router.get("/:id", getDocumento); // http://localhost:3000/api/documento/:id
+router.use(onlyCEE);
+router.post("/", createDocumento); // http://localhost:3000/api/documento/
 router.patch("/:id", updateDocumento); // http://localhost:3000/api/documento/:id
 router.delete("/:id", deleteDocumento); // http://localhost:3000/api/documento/:id
 

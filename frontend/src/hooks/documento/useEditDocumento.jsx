@@ -16,19 +16,21 @@ const useEditDocumento = (setDocumentos) => {
 	if (updatedData) {
 		try {
 			console.log('Datos a actualizar:', updatedData);
-			/*linea 19*/ const updatedDoc = await updateDocumento(dataDocumento[0].id, updatedData);
-			console.log('Respuesta API updateDocumento:', updatedDoc);
+			const updatedDoc = await updateDocumento(dataDocumento[0].id, updatedData);
 			showSuccessAlert('¡Actualizado!', 'El documento ha sido actualizado correctamente.');
 			setIsPopupOpen(false);
-
 			setDocumentos(prevDocs => prevDocs.map(doc => (
 				doc.id === updatedDoc.id ? updatedDoc : doc
 			)));
-
 			setDataDocumento([]);
 		} catch (error) {
+			const msg = error?.response?.data?.message || error?.message || '';
+			if (msg.includes('Centro de Estudiantes') || msg.includes('CEE')) {
+				showErrorAlert('Error', 'Acceso solo para el Centro de Estudiantes');
+			} else {
+				showErrorAlert('Cancelado', 'Ocurrió un error al actualizar el documento.');
+			}
 			console.error('Error al actualizar el documento:', error);
-			showErrorAlert('Cancelado', 'Ocurrió un error al actualizar el documento.');
 		}
 	}
 };
