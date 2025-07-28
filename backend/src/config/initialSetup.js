@@ -27,16 +27,16 @@ async function createUsers() {
           email: "usuario1.2024@alumnos.ubiobio.cl",
           password: await encryptPassword("user1234"),
           esCEE: true,
-        })
+        }),
       ),
-        userRepository.save(
-          userRepository.create({
-            nombreCompleto: "Alexander Benjamín Marcelo Carrasco Fuentes",
-            rut: "20.630.735-8",
-            email: "usuario2.2024@alumnos.ubiobio.cl",
-            password: await encryptPassword("user1234"),
-            esCEE: false,
-          }),
+      userRepository.save(
+        userRepository.create({
+          nombreCompleto: "Alexander Benjamín Marcelo Carrasco Fuentes",
+          rut: "20.630.735-8",
+          email: "usuario2.2024@alumnos.ubiobio.cl",
+          password: await encryptPassword("user1234"),
+          esCEE: false,
+        }),
       ),
       userRepository.save(
         userRepository.create({
@@ -73,6 +73,15 @@ async function createUsers() {
           password: await encryptPassword("user1234"),
           esCEE: false,
         }),
+        userRepository.save(
+          userRepository.create({
+            nombreCompleto: "Karla Andrea Jimenez Millar",
+            rut: "20.255.623-K",
+            email: "karlitajmotaku@gmail.com",
+            password: await encryptPassword("user1234"),
+            esCEE: false,
+          }),
+        ),
       ),
     ]);
     console.log("* => Usuarios creados exitosamente");

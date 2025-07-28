@@ -18,6 +18,9 @@ import {
   handleSuccess,
 } from "../handlers/responseHandlers.js";
 
+import { sendActaNotification } from "../helpers/email.helper.js";
+import { getUsersService } from "../services/estudiante.service.js";
+
 export async function createDocumento(req, res) {
   try {
     const { error } = documentoBodyValidation.validate(req.body);
@@ -36,6 +39,18 @@ export async function createDocumento(req, res) {
 
     if (err) return handleErrorClient(res, 400, "Error creando documento", err);
 
+    // Enviar correo a todos los estudiantes
+    try {
+      const [users, usersErr] = await getUsersService();
+      if (!usersErr && users && users.length > 0) {
+        const emails = users.map(u => u.email).filter(Boolean);
+        if (emails.length > 0) {
+          await sendActaNotification(emails);
+        }
+      }
+    } catch (mailErr) {
+      console.error("Error enviando notificación de acta:", mailErr);
+    }
     handleSuccess(res, 201, "Documento creado con éxito", documento);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
@@ -46,11 +61,9 @@ export async function getDocumentos(req, res) {
   try {
     const [documentos, err] = await getDocumentosService();
 
-    if (err) return handleErrorClient(res, 404, err);
+    if (err) return handleSuccess(res, 200, "Documentos encontrados", []);
 
-    documentos.length === 0
-      ? handleSuccess(res, 204)
-      : handleSuccess(res, 200, "Documentos encontrados", documentos);
+    handleSuccess(res, 200, "Documentos encontrados", documentos || []);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }

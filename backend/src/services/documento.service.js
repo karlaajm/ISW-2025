@@ -39,7 +39,6 @@ export async function getDocumentos() {
     const documentos = await repo
       .createQueryBuilder("documento")
       .innerJoin("documento.estudiante", "estudiante")
-      .where("estudiante.esCEE = :esCEE", { esCEE: true })
       .select([
         "documento.id",
         "documento.nombre",
@@ -62,7 +61,6 @@ export async function getDocumento(id) {
       .createQueryBuilder("documento")
       .innerJoin("documento.estudiante", "estudiante")
       .where("documento.id = :id", { id })
-      .andWhere("estudiante.esCEE = :esCEE", { esCEE: true })
       .select([
         "documento.id",
         "documento.nombre",
