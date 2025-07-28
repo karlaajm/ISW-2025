@@ -21,8 +21,9 @@ import {
 export async function createDocumento(req, res) {
   try {
     const { error } = documentoBodyValidation.validate(req.body);
-    if (error)
+    if (error) {
       return handleErrorClient(res, 400, "Error de validación", error.message);
+    }
 
     const { nombre, ID_Estudiante, fecha_subida, archivo_base64 } = req.body;
 

@@ -3,7 +3,7 @@ import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert';
 
 const useCreateDocumento = (fetchDocumentos, setIsPopupOpen) => {
   const handleCreate = async (formData) => {
-    if (!formData.nombre || !formData.fechaSubida || !formData.archivoBase64) {
+    if (!formData.nombre || !formData.fecha_subida || !formData.archivo_base64) {
       showErrorAlert('Error', 'Todos los campos son obligatorios.');
       return;
     }
