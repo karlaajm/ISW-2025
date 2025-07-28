@@ -1,0 +1,49 @@
+.tabulator {
+    border-radius: 16px 16px 0 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+.tabulator .tabulator-header {
+    background: #1a237e !important;
+    color: #fff !important;
+    border-radius: 16px 16px 0 0 !important;
+    border: none !important;
+}
+.tabulator .tabulator-col {
+    background: #1a237e !important;
+    color: #fff !important;
+    border: none !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+}
+.tabulator .tabulator-row {
+    background: #eaf3ff !important;
+    border: none !important;
+}
+.tabulator .tabulator-row:nth-child(even) {
+    background: #fff !important;
+}
+.tabulator .tabulator-cell {
+    border: none !important;
+    font-size: 1rem !important;
+    padding: 0.8rem 1.2rem !important;
+}
+.table-container .tabulator .tabulator-col.tabulator-select,
+.table-container .tabulator .tabulator-cell.tabulator-select {
+    width: 20px !important;
+    min-width: 20px !important;
+    max-width: 20px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.tabulator-cell input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    cursor: pointer !important;
+}

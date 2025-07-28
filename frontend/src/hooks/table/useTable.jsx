@@ -16,6 +16,7 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
                     titleFormatter: false, 
                     hozAlign: "center", 
                     headerSort: false, 
+                    width: 36, // ancho fijo para el tick
                     cellClick: function (e, cell) {
                         cell.getRow().toggleSelect();
                     } 
@@ -25,7 +26,7 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
             const tabulatorTable = new Tabulator(tableRef.current, {
                 data: [],
                 columns: updatedColumns,
-                layout: "fitColumns",
+                layout: "fitDataTable",
                 responsiveLayout: "collapse",
                 pagination: true,
                 paginationSize: 6,
