@@ -38,3 +38,23 @@ export async function getMovimientosPorLibro(libroId) {
   const response = await axios.get(`/movimiento/${libroId}`);
   return response.data.data;
 }
+
+export async function actualizarMovimiento(id, data) {
+  const response = await axios.patch(`/movimiento/${id}`, data);
+  return response.data.data;
+}
+
+export async function eliminarMovimiento(id) {
+  const response = await axios.delete(`/movimiento/${id}`);
+  return response.data.data;
+}
+
+export async function getHistorialMovimientosPorLibro(libroId) {
+  const response = await axios.get(`/movimiento/${libroId}/historial`);
+  return response.data.data;
+}
+
+export async function restaurarMovimiento(movimientoId) {
+  const response = await axios.patch(`/movimiento/${movimientoId}/restaurar`);
+  return response.data.data;
+}
