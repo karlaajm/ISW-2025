@@ -1,9 +1,19 @@
-import { createMovimientoService,
-        deleteMovimientoService, 
-        getMovimientosLibroService, 
-        updateMovimientoService, 
+import { 
+  createMovimientoService,
+  deleteMovimientoService, 
+  getHistorialMovimientosLibroService, 
+  getMovimientosLibroService, 
+  restaurarMovimientoService,
+  updateMovimientoService,
 } from "../services/movimientosLibro.service.js";
-import { movimientoBodyValidation, movimientoUpdateValidation } from "../validations/movimientosLibro.validation.js";
+
+import { 
+  libroIdValidation, 
+  movimientoBodyValidation,
+  movimientoIdValidation,
+  movimientoUpdateValidation,
+} from "../validations/movimientosLibro.validation.js";
+
 import { handleErrorClient, handleErrorServer, handleSuccess } from "../handlers/responseHandlers.js";
 
 export async function createMovimiento(req, res) {
@@ -57,10 +67,41 @@ export async function updateMovimiento(req, res) {
 export async function deleteMovimiento(req, res) {
   try {
     const { id } = req.params;
-    const [ok, movimientoError] = await deleteMovimientoService(Number(id));
+    const { error } = movimientoIdValidation.validate({ id: Number(id) });
+    if (error) return handleErrorClient(res, 400, "Error de validación", error.message);
+
+    const [movimiento, movimientoError] = await deleteMovimientoService(Number(id));
     if (movimientoError) return handleErrorClient(res, 400, "Error eliminando movimiento", movimientoError);
 
-    handleSuccess(res, 200, "Movimiento eliminado correctamente");
+    handleSuccess(res, 200, "Movimiento eliminado correctamente", movimiento);
+  } catch (error) {
+    handleErrorServer(res, 500, error.message);
+  }
+}
+
+export async function getHistorialMovimientosLibro(req, res) {
+  try {
+    const { libroId } = req.params;
+    const { error } = libroIdValidation.validate({ libroId: Number(libroId) });
+    if (error) return handleErrorClient(res, 400, "Error de validación", error.message);
+
+    const [movimientos, movimientosError] = await getHistorialMovimientosLibroService(Number(libroId));
+    if (movimientosError) return handleErrorClient(res, 400, "Error listando historial", movimientosError);
+
+    handleSuccess(res, 200, "Historial de movimientos obtenido correctamente", movimientos);
+  } catch (error) {
+    handleErrorServer(res, 500, error.message);
+  }
+}
+
+export async function restaurarMovimiento(req, res) {
+  try {
+    const { id } = req.params;
+    
+    const [movimiento, movimientoError] = await restaurarMovimientoService(Number(id));
+    if (movimientoError) return handleErrorClient(res, 400, "Error restaurando movimiento", movimientoError);
+
+    handleSuccess(res, 200, "Movimiento restaurado correctamente", movimiento);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }
