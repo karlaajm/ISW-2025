@@ -38,14 +38,12 @@ export async function createDocumento(req, res) {
     });
 
     if (err) return handleErrorClient(res, 400, "Error creando documento", err);
-
-    // Enviar correo a todos los estudiantes
     try {
       const [users, usersErr] = await getUsersService();
       if (!usersErr && users && users.length > 0) {
-        const emails = users.map(u => u.email).filter(Boolean);
+        const emails = users.map((u) => u.email).filter(Boolean);
         if (emails.length > 0) {
-          await sendActaNotification(emails);
+          await sendActaNotification(emails, nombre);
         }
       }
     } catch (mailErr) {
