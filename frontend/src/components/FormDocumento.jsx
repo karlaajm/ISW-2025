@@ -4,6 +4,7 @@ import Form from "./Form";
 
 export default function FormDocumento({ documento, onSave, onCancel }) {
 const [archivoBase64, setArchivoBase64] = useState(documento?.archivo_base64 ? `data:application/pdf;base64,${documento.archivo_base64}` : "");
+const fechaMaxima = new Date().toISOString().split('T')[0];
 const fechaInicial = documento?.fecha_subida && documento?.fecha_subida.length >= 10
   ? documento.fecha_subida.slice(0, 10)
   : (documento?.fechaSubida && documento?.fechaSubida.length >= 10 ? documento.fechaSubida.slice(0, 10) : "");
@@ -35,6 +36,7 @@ const fields = [
 	fieldType: "input",
 	type: "date",
 	required: true,
+	max: fechaMaxima,
 	defaultValue: fechaInicial,
 	placeholder: fechaInicial || "YYYY-MM-DD"
   },
