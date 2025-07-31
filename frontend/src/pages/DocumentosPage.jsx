@@ -59,7 +59,7 @@ export default function DocumentosPage() {
         		const link = document.createElement("a");
         		link.href = `data:application/pdf;base64,${rowData.archivoBase64}`;
         		link.download = `${rowData.nombre}.pdf`;
-				link.style = "background: transparent; border-radius: 6px; cursor: pointer; padding: 0.2rem; width: 24px; height: 24px;";
+				link.style = "color: #1a237e; background: transparent; border-radius: 6px; cursor: pointer; padding: 0.2rem; width: 24px; height: 24px;";
 				link.onmouseenter = () => {
   					link.style.backgroundColor = "#1a237e";
 					const svg = link.querySelector("svg");
