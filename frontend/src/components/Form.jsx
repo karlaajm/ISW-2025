@@ -47,6 +47,7 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
 										? (showNewPassword ? 'text' : 'password')
 										: field.type
 							}
+							max={field.max}
 							defaultValue={field.defaultValue || ''}
 							disabled={field.disabled}
 							onChange={field.onChange}
