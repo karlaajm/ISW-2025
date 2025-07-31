@@ -10,7 +10,8 @@ const useDocumentos = () => {
 			const formattedData = response.map(doc => ({
 				id: doc.id,
 				nombre: doc.nombre,
-				fechaSubida: doc.fechaSubida
+				fechaSubida: doc.fechaSubida,
+				archivoBase64: doc.archivoBase64
 			}));
 			setDocumentos(formattedData);
 			return formattedData;

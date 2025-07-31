@@ -6,6 +6,7 @@ import Search from "@components/Search";
 import Popup from "@components/Popup";
 import DeleteIcon from "@assets/deleteIcon.svg";
 import UpdateIcon from "@assets/updateIcon.svg";
+import DownloadIcon from "@assets/DownloadIcon.svg?raw";
 import DeleteIconDisable from "@assets/deleteIconDisabled.svg";
 import UpdateIconDisable from "@assets/updateIconDisabled.svg";
 
@@ -41,8 +42,44 @@ export default function DocumentosPage() {
 	}, [setDataDocumento]);
 
 	const columns = [
-		{ title: "Nombre", field: "nombre", width: 540 },
-		{ title: "Fecha de subida", field: "fechaSubida", width: 200 }
+		{ title: "Nombre", field: "nombre", width: 520 },
+		{ title: "Fecha de subida", field: "fechaSubida", width: 200 },
+		{ 
+			title: "Descargar", field: "descargarPDF",
+      		formatter: function (cell) {
+				const rowData = cell.getRow().getData();
+
+				const wrapper = document.createElement("div");
+				wrapper.style.display = "flex";
+				wrapper.style.justifyContent = "center";
+				wrapper.style.alignItems = "center";
+				wrapper.style.width = "100%";
+				wrapper.style.height = "100%";
+
+        		const link = document.createElement("a");
+        		link.href = `data:application/pdf;base64,${rowData.archivoBase64}`;
+        		link.download = `${rowData.nombre}.pdf`;
+				link.style = "background: transparent; border-radius: 6px; cursor: pointer; padding: 0.2rem; width: 24px; height: 24px;";
+				link.onmouseenter = () => {
+  					link.style.backgroundColor = "#1a237e";
+					const svg = link.querySelector("svg");
+      				if (svg) svg.setAttribute("fill", "#ffffff");
+				};
+				link.onmouseleave = () => {
+  					link.style.backgroundColor = "transparent";
+					const svg = link.querySelector("svg");
+      				if (svg) svg.setAttribute("fill", "#1a237e");
+				};
+				link.target = "_blank";
+				link.innerHTML = DownloadIcon;
+
+				wrapper.append(link);
+				return wrapper;
+			},
+      		headerHozAlign: "center",
+			headerSort: false,
+      		width: 170
+    	}
 	];
 
 	return (
