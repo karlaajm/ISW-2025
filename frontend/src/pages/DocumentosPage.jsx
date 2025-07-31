@@ -32,6 +32,7 @@ export default function DocumentosPage() {
 	} = useEditDocumento(setDocumentos);
 	const { handleDelete } = useDeleteDocumento(fetchDocumentos, setDataDocumento, setDocumentos);
 	const { handleCreate } = useCreateDocumento(fetchDocumentos, setIsPopupOpen);
+	const esCEE = JSON.parse(sessionStorage.getItem('usuario'))?.esCEE;
 
 	const handleFilterChange = (e) => {
 		setFilterNombre(e.target.value);
@@ -110,6 +111,7 @@ export default function DocumentosPage() {
 								setDataDocumento([]);
 								setIsPopupOpen(true);
 							}}
+							hidden={!esCEE}
 							style={{
 								background: "#1a237e",
 								color: "#fff",
@@ -129,6 +131,7 @@ export default function DocumentosPage() {
 						</button>
 						<button
 							onClick={handleClickUpdate}
+							hidden={!esCEE}
 							disabled={dataDocumento.length === 0}
 							style={{ background: "transparent", border: "none", cursor: dataDocumento.length === 0 ? "not-allowed" : "pointer", padding: "0.2rem" }}
 							onMouseEnter={e => {
@@ -146,6 +149,7 @@ export default function DocumentosPage() {
 						</button>
 						<button
 							onClick={() => handleDelete(dataDocumento)}
+							hidden={!esCEE}
 							disabled={dataDocumento.length === 0}
 							style={{ background: "transparent", border: "none", cursor: dataDocumento.length === 0 ? "not-allowed" : "pointer", padding: "0.2rem" }}
 							onMouseEnter={e => {
