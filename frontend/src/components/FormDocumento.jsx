@@ -9,7 +9,6 @@ const fechaInicial = documento?.fecha_subida && documento?.fecha_subida.length >
   : (documento?.fechaSubida && documento?.fechaSubida.length >= 10 ? documento.fechaSubida.slice(0, 10) : "");
 const today = new Date();
 const offsetDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000);
-console.log(offsetDate)
 const localTodayDate = offsetDate.toISOString().slice(0, 10);
 
 	const handleFileChange = async (e) => {

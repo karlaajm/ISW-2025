@@ -44,7 +44,7 @@ export default function DocumentosPage() {
 
 	const columns = [
 		{ title: "Nombre", field: "nombre", width: 520 },
-		{ title: "Fecha de subida", field: "fechaSubida", width: 200 },
+		{ title: "Fecha de subida", field: "fechaSubida", width: 220 },
 		{ 
 			title: "Descargar", field: "descargarPDF",
       		formatter: function (cell) {

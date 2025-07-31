@@ -7,12 +7,14 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
     const tableRef = useRef(null);
     const [table, setTable] = useState(null);
     const [isTableBuilt, setIsTableBuilt] = useState(false);
+	const esCEE = JSON.parse(sessionStorage.getItem('usuario'))?.esCEE;
 
     useEffect(() => {
         if (tableRef.current) {
             const updatedColumns = [
                 { 
-                    formatter: "rowSelection", 
+                    formatter: "rowSelection",
+					visible: esCEE, 
                     titleFormatter: false, 
                     hozAlign: "center", 
                     headerSort: false, 

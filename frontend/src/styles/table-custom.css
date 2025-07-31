@@ -47,3 +47,7 @@
     height: 18px !important;
     cursor: pointer !important;
 }
+
+.tabulator-col-content {
+	padding: 0.5rem 1.2rem !important;
+}
