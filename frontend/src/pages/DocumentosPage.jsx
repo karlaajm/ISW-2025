@@ -32,6 +32,7 @@ export default function DocumentosPage() {
 	} = useEditDocumento(setDocumentos);
 	const { handleDelete } = useDeleteDocumento(fetchDocumentos, setDataDocumento, setDocumentos);
 	const { handleCreate } = useCreateDocumento(fetchDocumentos, setIsPopupOpen);
+	const esCEE = JSON.parse(sessionStorage.getItem('usuario'))?.esCEE;
 
 	const handleFilterChange = (e) => {
 		setFilterNombre(e.target.value);
@@ -43,7 +44,7 @@ export default function DocumentosPage() {
 
 	const columns = [
 		{ title: "Nombre", field: "nombre", width: 520 },
-		{ title: "Fecha de subida", field: "fechaSubida", width: 200 },
+		{ title: "Fecha de subida", field: "fechaSubida", width: 220 },
 		{ 
 			title: "Descargar", field: "descargarPDF",
       		formatter: function (cell) {
@@ -59,7 +60,7 @@ export default function DocumentosPage() {
         		const link = document.createElement("a");
         		link.href = `data:application/pdf;base64,${rowData.archivoBase64}`;
         		link.download = `${rowData.nombre}.pdf`;
-				link.style = "background: transparent; border-radius: 6px; cursor: pointer; padding: 0.2rem; width: 24px; height: 24px;";
+				link.style = "color: #1a237e; background: transparent; border-radius: 6px; cursor: pointer; padding: 0.2rem; width: 24px; height: 24px;";
 				link.onmouseenter = () => {
   					link.style.backgroundColor = "#1a237e";
 					const svg = link.querySelector("svg");
@@ -110,6 +111,7 @@ export default function DocumentosPage() {
 								setDataDocumento([]);
 								setIsPopupOpen(true);
 							}}
+							hidden={!esCEE}
 							style={{
 								background: "#1a237e",
 								color: "#fff",
@@ -129,6 +131,7 @@ export default function DocumentosPage() {
 						</button>
 						<button
 							onClick={handleClickUpdate}
+							hidden={!esCEE}
 							disabled={dataDocumento.length === 0}
 							style={{ background: "transparent", border: "none", cursor: dataDocumento.length === 0 ? "not-allowed" : "pointer", padding: "0.2rem" }}
 							onMouseEnter={e => {
@@ -146,6 +149,7 @@ export default function DocumentosPage() {
 						</button>
 						<button
 							onClick={() => handleDelete(dataDocumento)}
+							hidden={!esCEE}
 							disabled={dataDocumento.length === 0}
 							style={{ background: "transparent", border: "none", cursor: dataDocumento.length === 0 ? "not-allowed" : "pointer", padding: "0.2rem" }}
 							onMouseEnter={e => {
